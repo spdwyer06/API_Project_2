@@ -8,20 +8,21 @@ let url;
 let searchTermInput = document.getElementById('searchTerm');
 const searchSubmitBtn = document.getElementById('searchSubmitBtn');
 const searchResultsRow = document.getElementById('searchResults');
-const randomResultsRow = document.getElementById('randomResults');
 const randomImageBtn = document.getElementById('randomImageBtn');
-const previousPhotos = document.getElementById('previousPhotos');
-const randomPhotoCollectionBtn = document.getElementById('randomPhotoCollectionBtn');
+// const randomResultsRow = document.getElementById('randomResults');
+// const previousPhotos = document.getElementById('previousPhotos');
+// const randomPhotoCollectionBtn = document.getElementById('randomPhotoCollectionBtn');
 
 // EVENT LISTENERS
 searchSubmitBtn.addEventListener('click', fetchSearchImages);
-randomImageBtn.addEventListener('click', fetchRandomImage);
-randomPhotoCollectionBtn.addEventListener('click', displayPreviouslyViewedRandomPhotos);
+randomImageBtn.addEventListener('click', loadRandomImgPage);
+// randomPhotoCollectionBtn.addEventListener('click', displayPreviouslyViewedRandomPhotos);
 
 // HELPER FUNCTIONS
 
 // CONSTANTS
 let previousRandomPhotos = new Array();
+var blah = previousRandomPhotos;
 
 
 
@@ -39,15 +40,19 @@ function fetchSearchImages() {
 
 }
 
-function fetchRandomImage(){
-    // console.log('Random image button pressed');    
-    url = baseURL + '/photos/random' + key;
-    // console.log(url);
-
-    fetch(url)
-        .then(response => response.json())
-        .then(json => displayRandomResult(json));
+function loadRandomImgPage(){
+    window.location = '../API_Project2/Pages/randomPhotos.html'; // Sends to other html page
 }
+
+// function fetchRandomImage(){
+//     // console.log('Random image button pressed');    
+//     url = baseURL + '/photos/random' + key;
+//     // console.log(url);
+
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(json => displayRandomResult(json));
+// }
 
 function displaySearchResults(json){
 
@@ -64,38 +69,40 @@ function displaySearchResults(json){
     console.log(json);
 }
 
-function displayRandomResult(json) {
+// function displayRandomResult(json) {
 
-    console.clear();
+//     console.clear();
 
-    while(randomResultsRow.firstChild){
-        randomResultsRow.removeChild(randomResultsRow.firstChild);
-    }
+//     while(randomResultsRow.firstChild){
+//         randomResultsRow.removeChild(randomResultsRow.firstChild);
+//     }
 
-    let randomImage = document.createElement('img');
-    randomImage.src = json.urls.thumb;
-    console.log(randomImage.src);
-    randomImage.alt = json.alt_description;
-    // console.log(randomImage.alt);
-    // randomImage.style = 'width: 400px; height: 400px;'
+//     let randomImage = document.createElement('img');
+//     randomImage.src = json.urls.thumb;
+//     console.log(randomImage.src);
+//     randomImage.alt = json.alt_description;
+//     // console.log(randomImage.alt);
+//     // randomImage.style = 'width: 400px; height: 400px;'
 
-    previousRandomPhotos.push(randomImage.src);
+//     previousRandomPhotos.push(randomImage.src);
 
-    randomResultsRow.appendChild(randomImage);
+//     randomResultsRow.appendChild(randomImage);
 
-    console.log(json);
-}
+//     console.log(json);
+// }
 
 function displayPreviouslyViewedRandomPhotos(){
 
-    while(previousPhotos.firstChild){
-        previousPhotos.removeChild(previousPhotos.firstChild);
-    }
+    window.location = 'test.html'; // Sends to other html page
 
-    for(imgURL of previousRandomPhotos){
-        let img = document.createElement('img');
-        img.src = imgURL;
+    // while(previousPhotos.firstChild){
+    //     previousPhotos.removeChild(previousPhotos.firstChild);
+    // }
 
-        previousPhotos.appendChild(img);
-    }
+    // for(imgURL of previousRandomPhotos){
+    //     let img = document.createElement('img');
+    //     img.src = imgURL;
+
+    //     previousPhotos.appendChild(img);
+    // }
 }
