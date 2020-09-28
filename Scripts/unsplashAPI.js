@@ -8,10 +8,15 @@ let url;
 let searchTermInput = document.getElementById('searchTerm');
 const searchSubmitBtn = document.getElementById('searchSubmitBtn');
 const searchResultsRow = document.getElementById('searchResults');
+const searchPagination = document.getElementById('searchPagination');
+const prevPage = document.getElementById('prevPage');
+const nextPage = document.getElementById('nextPage');
 const randomImageBtn = document.getElementById('randomImageBtn');
 // const randomResultsRow = document.getElementById('randomResults');
 // const previousPhotos = document.getElementById('previousPhotos');
 // const randomPhotoCollectionBtn = document.getElementById('randomPhotoCollectionBtn');
+
+searchPagination.style.display = 'none';
 
 // EVENT LISTENERS
 searchSubmitBtn.addEventListener('click', fetchSearchImages);
@@ -22,16 +27,15 @@ randomImageBtn.addEventListener('click', loadRandomImgPage);
 
 // CONSTANTS
 let previousRandomPhotos = new Array();
-var blah = previousRandomPhotos;
-
-
+let pageNumber = 1;
 
 // FUNCTIONS
 function fetchSearchImages() {
     // console.log('Search submit button pressed');
     let searchTerm = searchTermInput.value;
     console.log(searchTerm);
-    url = `${baseURL}/search/photos${key}&query=${searchTerm}`;
+    // url = `${baseURL}/search/photos${key}&query=${searchTerm}`;
+    url = `${baseURL}/search/photos${key}&page=${pageNumber}&query=${searchTerm}`;
     console.log(url);
     // console.log(url);
     fetch(url)
