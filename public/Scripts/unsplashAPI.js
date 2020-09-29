@@ -9,18 +9,21 @@ let searchTermInput = document.getElementById('searchTerm');
 const searchSubmitBtn = document.getElementById('searchSubmitBtn');
 const searchResultsRow = document.getElementById('searchResults');
 const searchPagination = document.getElementById('searchPagination');
-const prevPage = document.getElementById('prevPage');
-const nextPage = document.getElementById('nextPage');
+const prevPageBtn = document.getElementById('prevPageBtn');
+const nextPageBtn = document.getElementById('nextPageBtn');
 const randomImageBtn = document.getElementById('randomImageBtn');
 // const randomResultsRow = document.getElementById('randomResults');
 // const previousPhotos = document.getElementById('previousPhotos');
 // const randomPhotoCollectionBtn = document.getElementById('randomPhotoCollectionBtn');
 
-searchPagination.style.display = 'none';
+searchPagination.style.display = 'none'; // Hiding the search pagination buttons (no search results to display yet)
 
 // EVENT LISTENERS
 searchSubmitBtn.addEventListener('click', fetchSearchImages);
 randomImageBtn.addEventListener('click', loadRandomImgPage);
+prevPageBtn.addEventListener('click', fetchPrevPageResults);
+nextPageBtn.addEventListener('click', fetchNextPageResults);
+
 // randomPhotoCollectionBtn.addEventListener('click', displayPreviouslyViewedRandomPhotos);
 
 // HELPER FUNCTIONS
@@ -45,18 +48,8 @@ function fetchSearchImages() {
 }
 
 function loadRandomImgPage(){
-    window.location = '../API_Project2/Pages/randomPhotos.html'; // Sends to other html page
+    window.location = '../public/Pages/randomPhotos.html'; // Sends to other html page
 }
-
-// function fetchRandomImage(){
-//     // console.log('Random image button pressed');    
-//     url = baseURL + '/photos/random' + key;
-//     // console.log(url);
-
-//     fetch(url)
-//         .then(response => response.json())
-//         .then(json => displayRandomResult(json));
-// }
 
 function displaySearchResults(json){
 
@@ -70,8 +63,45 @@ function displaySearchResults(json){
 
         searchResultsRow.appendChild(img);
     }
-    console.log(json);
+    // console.log(json);
+
+    let pics = json.total;
+    // console.log(pics);
+    if(pics > 10){
+        searchPagination.style.display = 'block';
+        if(pageNumber == 1){
+            prevPageBtn.style.display = 'none';
+        }
+        else if(pageNumber == json.total_pages){
+            nextPageBtn.style.display = 'none';
+        }
+        else{
+            prevPageBtn.style.display = 'block';
+            nextPageBtn.style.display = 'block';
+        }
+    }
 }
+
+function fetchPrevPageResults(){
+    pageNumber--;
+    fetchSearchImages();
+}
+
+function fetchNextPageResults(){
+    pageNumber++;
+    fetchSearchImages();
+}
+
+// function fetchRandomImage(){
+//     // console.log('Random image button pressed');    
+//     url = baseURL + '/photos/random' + key;
+//     // console.log(url);
+
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(json => displayRandomResult(json));
+// }
+
 
 // function displayRandomResult(json) {
 
@@ -95,18 +125,18 @@ function displaySearchResults(json){
 //     console.log(json);
 // }
 
-function displayPreviouslyViewedRandomPhotos(){
+// function displayPreviouslyViewedRandomPhotos(){
 
-    window.location = 'test.html'; // Sends to other html page
+//     window.location = 'test.html'; // Sends to other html page
 
-    // while(previousPhotos.firstChild){
-    //     previousPhotos.removeChild(previousPhotos.firstChild);
-    // }
+//     // while(previousPhotos.firstChild){
+//     //     previousPhotos.removeChild(previousPhotos.firstChild);
+//     // }
 
-    // for(imgURL of previousRandomPhotos){
-    //     let img = document.createElement('img');
-    //     img.src = imgURL;
+//     // for(imgURL of previousRandomPhotos){
+//     //     let img = document.createElement('img');
+//     //     img.src = imgURL;
 
-    //     previousPhotos.appendChild(img);
-    // }
-}
+//     //     previousPhotos.appendChild(img);
+//     // }
+// }
