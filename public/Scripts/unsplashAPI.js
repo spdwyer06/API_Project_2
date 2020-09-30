@@ -63,7 +63,7 @@ function displaySearchResults(json){
     let pics = json.total;
     // console.log(pics);
     if(pics > 10){
-        searchPagination.style.display = 'block';
+        searchPagination.style.display = 'inline';
         if(pageNumber == 1){
             prevPageBtn.style.display = 'none';
         }
@@ -71,8 +71,8 @@ function displaySearchResults(json){
             nextPageBtn.style.display = 'none';
         }
         else{
-            prevPageBtn.style.display = 'block';
-            nextPageBtn.style.display = 'block';
+            prevPageBtn.style.display = 'inline';
+            nextPageBtn.style.display = 'inline';
         }
     }
 }
