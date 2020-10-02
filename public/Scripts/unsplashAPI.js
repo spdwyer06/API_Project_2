@@ -32,7 +32,7 @@ let pageNumber = 1;
 // FUNCTIONS
 function fetchSearchImages() {
     let searchTerm = searchTermInput.value;
-    console.log(searchTerm);
+    // console.log(searchTerm);
     url = `${baseURL}/search/photos${key}&page=${pageNumber}&query=${searchTerm}`;
     // console.log(url);
     
