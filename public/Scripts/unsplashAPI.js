@@ -12,12 +12,13 @@ const searchPagination = document.getElementById('searchPagination');
 const prevPageBtn = document.getElementById('prevPageBtn');
 const nextPageBtn = document.getElementById('nextPageBtn');
 const randomImageBtn = document.getElementById('randomImageBtn');
+const randomPhotoSlot = document.getElementById('randomPhotoSlot');
 
 searchPagination.style.display = 'none'; // Hiding the search pagination buttons (no search results to display yet)
 
 // EVENT LISTENERS
 searchSubmitBtn.addEventListener('click', fetchSearchImages);
-randomImageBtn.addEventListener('click', loadRandomImgPage);
+randomImageBtn.addEventListener('click', fetchRandomImg);
 prevPageBtn.addEventListener('click', fetchPrevPageResults);
 nextPageBtn.addEventListener('click', fetchNextPageResults);
 
@@ -30,20 +31,15 @@ let pageNumber = 1;
 
 // FUNCTIONS
 function fetchSearchImages() {
-    // console.log('Search submit button pressed');
     let searchTerm = searchTermInput.value;
     console.log(searchTerm);
     url = `${baseURL}/search/photos${key}&page=${pageNumber}&query=${searchTerm}`;
-    console.log(url);
     // console.log(url);
+    
     fetch(url)
         .then(response => response.json())
         .then(json => displaySearchResults(json));
 
-}
-
-function loadRandomImgPage(){
-    window.location = '../public/Pages/randomPhotos.html'; // Sends to other html page
 }
 
 function displaySearchResults(json){
@@ -85,4 +81,32 @@ function fetchPrevPageResults(){
 function fetchNextPageResults(){
     pageNumber++;
     fetchSearchImages();
+}
+
+function fetchRandomImg(){
+
+    url = baseURL + 'photos/random' + key;
+    // console.log(url);
+
+    fetch(url)
+        .then(response => response.json())
+        .then(json => displayRandomImg(json));
+}
+
+function displayRandomImg(json) {
+    
+    // console.log(json);
+
+    while(randomPhotoSlot.firstChild){
+        randomPhotoSlot.removeChild(randomPhotoSlot.firstChild);
+    }
+
+    let randomImage = document.createElement('img');
+    randomImage.src = json.urls.thumb;
+    // console.log(randomImage.src);
+    randomImage.alt = json.alt_description;
+    // console.log(randomImage.alt);
+
+    randomPhotoSlot.appendChild(randomImage);
+
 }
